@@ -11,14 +11,12 @@ import com.mugglestar.entity.order.Order;
 import com.mugglestar.entity.order.OrderItem;
 import com.mugglestar.service.order.IOrderItemService;
 import com.mugglestar.service.order.IOrderService;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.omg.CORBA.ORB;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +25,7 @@ import java.util.List;
  * @author MuggleStar
  * @date 2020/10/18 19:20
  */
+@Service
 public class CrudExampleService {
 
 
@@ -44,6 +43,8 @@ public class CrudExampleService {
     public void saveExample(OrderDto orderDto) {
         Order order = orderDto.getOrder();
         List<OrderItem> orderItemList = orderDto.getOrderItemList();
+
+        // 普通新增
         boolean saveOrder = orderService.save(order);
         Assert.isTrue(saveOrder, "保存订单失败");
 
@@ -51,12 +52,13 @@ public class CrudExampleService {
             orderItem.setOrderId(order.getId());
         }
 
+        // 批量新增
         boolean saveBatch = orderItemService.saveBatch(orderItemList);
         Assert.isTrue(saveBatch, "保存订单明细失败");
 
-        boolean saveBatchAndSize = orderItemService.saveBatch(orderItemList, orderItemList.size());
+        // 批量新增，指定每批数量
+        boolean saveBatchAndSize = orderItemService.saveBatch(orderItemList, 2);
         Assert.isTrue(saveBatchAndSize, "保存订单明细失败");
-
     }
 
     /**
@@ -77,12 +79,12 @@ public class CrudExampleService {
         // 主键批量删除
         boolean removeByIds = orderService.removeByIds(orderIdList);
 
-        // 简单条件删除
+        // 简单条件删除，必须符合order的所有条件
         QueryWrapper<Order> queryWrapper = new QueryWrapper<>();
         queryWrapper.setEntity(order);
         boolean removeByQuery = orderService.remove(queryWrapper);
 
-        // 复杂条件删除
+        // 复杂条件删除，必须符合order的所有条件以及地下的附带条件
         LambdaQueryWrapper<Order> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper
                 .setEntity(order)
@@ -115,17 +117,17 @@ public class CrudExampleService {
         // 更新
         UpdateWrapper<Order> updateWrapper = new UpdateWrapper<>();
         updateWrapper
-                .setEntity(order)
                 .set("is_delete",order.getIsDelete())
                 .set("status",order.getStatus())
+                .setEntity(order)
                 .eq("id",order.getId());
         boolean updateByUpdate = orderService.update(updateWrapper);
 
         // lambda 更新
         LambdaUpdateWrapper<Order> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         lambdaUpdateWrapper
-                .setEntity(order)
                 .set(Order::getIsDelete,order.getIsDelete())
+                .setEntity(order)
                 .eq(Order::getId,order.getId());
 
         boolean updateByLambda = orderService.update(lambdaUpdateWrapper);
