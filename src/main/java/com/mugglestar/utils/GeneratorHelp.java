@@ -1,5 +1,6 @@
 package com.mugglestar.utils;
 
+import com.aios.server.business.model.base.AbstractEntity;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -22,7 +23,7 @@ public class GeneratorHelp {
     /**
      * 模板
      */
-    private String template = "template/default";
+    private String template = "template/aios";
     /**
      * 包名
      */
@@ -61,6 +62,7 @@ public class GeneratorHelp {
         globalConfig.setOutputDir(filePath);
         globalConfig.setAuthor(author);
         globalConfig.setOpen(false);
+        globalConfig.setSwagger2(true);
 
         // 包配置
         PackageConfig packageConfig = new PackageConfig();
@@ -81,36 +83,36 @@ public class GeneratorHelp {
         fileOutConfigList.add(new FileOutConfig(template+"/entity.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return filePath + "/entity/" + modelName
-                        + "/" + tableInfo.getEntityName() + StringPool.DOT_JAVA;
+                return filePath +"/" + modelName + "/model/"
+                         + tableInfo.getEntityName() + StringPool.DOT_JAVA;
             }
         });
         fileOutConfigList.add(new FileOutConfig(template+"/mapper.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return filePath + "/mapper/" + modelName
+                return filePath +"/" + modelName + "/dao/"
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_JAVA;
             }
         });
         fileOutConfigList.add(new FileOutConfig(template+"/mapper.xml.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return filePath + "/mapper/" + modelName
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return filePath + "/" + modelName
+                        + "/mapper/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
         fileOutConfigList.add(new FileOutConfig(template+"/service.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return filePath + "/service/" + modelName
-                        + "/I" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+                return filePath  + "/" + modelName + "/service/"
+                        + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
             }
         });
         fileOutConfigList.add(new FileOutConfig(template+"/serviceImpl.java.ftl") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return filePath + "/service/" + modelName
-                        + "/impl/" + tableInfo.getEntityName() + "ServiceImpl" + StringPool.DOT_JAVA;
+                return filePath  + "/" + modelName + "/service/impl/"
+                         + tableInfo.getEntityName() + "ServiceImpl" + StringPool.DOT_JAVA;
             }
         });
         injectionConfig.setFileOutConfigList(fileOutConfigList);
@@ -120,6 +122,7 @@ public class GeneratorHelp {
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setEntityLombokModel(true);
+        strategyConfig.setSuperEntityClass(AbstractEntity.class);
         strategyConfig.setControllerMappingHyphenStyle(true);
         strategyConfig.setTablePrefix(tablePrefix);
         strategyConfig.setInclude(tableName);
