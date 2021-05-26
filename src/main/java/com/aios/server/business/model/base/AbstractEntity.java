@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public abstract class AbstractEntity implements Serializable {
+
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "主键编号")
     private Long id;
@@ -33,17 +34,9 @@ public abstract class AbstractEntity implements Serializable {
     @TableField
     private LocalDateTime updateTime;
 
-    @ApiModelProperty(value = "版本号,用于乐观锁，数据库默认0")
+    @ApiModelProperty(value = "删除标志 0.未删除 1.删除")
     @TableField
-    @Version
-    private Integer version = 0;
+    @TableLogic(value = "0",delval = "1")
+    private Integer isDelete = 1;
 
-    @ApiModelProperty(value = "逻辑删除是否有效（0-无效，1-有效），数据库默认1")
-    @TableField
-    @TableLogic(value = "1",delval = "0")
-    private Integer isValid = 1;
-
-    @ApiModelProperty(value = "备注，数据库默认空")
-    @TableField
-    private String remark;
 }
