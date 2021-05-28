@@ -17,28 +17,30 @@ public class GeneratorTest {
 
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setDriverName("org.postgresql.Driver");
-        dataSourceConfig.setUrl("jdbc:postgresql://192.168.43.100:5432/lingxi");
+        dataSourceConfig.setUrl("jdbc:postgresql://127.0.0.1:5432/postgres");
         dataSourceConfig.setUsername("postgres");
         dataSourceConfig.setPassword("postgres");
-        dataSourceConfig.setSchemaName("lingxi");
+        dataSourceConfig.setSchemaName("postgres");
         dataSourceConfig.setDbType(DbType.POSTGRE_SQL);
 
         GeneratorHelp generatorHelp = new GeneratorHelp(dataSourceConfig);
         generatorHelp.setAuthor("lujianrong");
         generatorHelp.setPackageName("com.lingxi");
 
-        generatorHelp.execute("server","advertise","");
-        generatorHelp.execute("server","advertise_item","");
-        generatorHelp.execute("server","advertise_material","");
-        generatorHelp.execute("server","advertise_material_group","");
-        generatorHelp.execute("server","advertise_to_shop","");
-        generatorHelp.execute("server","shop","");
-        generatorHelp.execute("server","cashier","");
-        generatorHelp.execute("server","equipment","");
-        generatorHelp.execute("server","equipment_apk","");
-        generatorHelp.execute("server","equipment_prop_name","");
-        generatorHelp.execute("server","sys_dict_data","");
-        generatorHelp.execute("server","sys_dict_type","");
+//        generatorHelp.execute("server","advertise","");
+//        generatorHelp.execute("server","advertise_item","");
+//        generatorHelp.execute("server","advertise_material","");
+//        generatorHelp.execute("server","advertise_material_group","");
+//        generatorHelp.execute("server","advertise_to_shop","");
+//        generatorHelp.execute("server","shop","");
+//        generatorHelp.execute("server","cashier","");
+//        generatorHelp.execute("server","equipment","");
+//        generatorHelp.execute("server","equipment_apk","");
+//        generatorHelp.execute("server","equipment_prop_name","");
+//        generatorHelp.execute("server","sys_dict_data","");
+//        generatorHelp.execute("server","sys_dict_type","");
+        generatorHelp.execute("server","order","");
+        generatorHelp.execute("server","order_detail","");
 
 
     }

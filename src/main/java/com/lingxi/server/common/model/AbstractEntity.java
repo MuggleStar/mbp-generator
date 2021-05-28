@@ -1,4 +1,4 @@
-package com.aios.server.business.model.base;
+package com.lingxi.server.common.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModelProperty;
@@ -37,6 +37,6 @@ public abstract class AbstractEntity implements Serializable {
     @ApiModelProperty(value = "删除标志 0.未删除 1.删除")
     @TableField
     @TableLogic(value = "0",delval = "1")
-    private Integer isDelete = 1;
+    private Integer isDelete;
 
 }

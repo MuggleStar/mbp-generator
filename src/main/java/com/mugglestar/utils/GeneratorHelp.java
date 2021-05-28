@@ -1,6 +1,6 @@
 package com.mugglestar.utils;
 
-import com.aios.server.business.model.base.AbstractEntity;
+import com.lingxi.server.common.model.AbstractEntity;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
